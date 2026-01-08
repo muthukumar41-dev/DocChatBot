@@ -37,7 +37,7 @@ embeddings = HuggingFaceEmbeddings(
     model_name="sentence-transformers/all-MiniLM-L6-v2"
 )
 
-st.set_page_config(page_title="📄 Strict Document Chatbot", layout="wide")
+st.set_page_config(page_title="📄 DocChatBot", layout="wide")
 st.title("📄 Strict Document Chatbot")
 
 # Initialize session state to track current document
@@ -332,3 +332,4 @@ Remember: Answer ONLY based on the context above. If the answer is not in the co
                         st.divider()
 
 #  .\venv\Scripts\streamlit run app.py
+
