@@ -1,6 +1,15 @@
 import streamlit as st
 from langchain_community.vectorstores import FAISS
-from langchain_huggingface import HuggingFaceEmbeddings
+# Import embeddings with a fallback so the app doesn't crash if package isn't installed on the server.
+try:
+    from langchain_huggingface import HuggingFaceEmbeddings
+except Exception:
+    try:
+        # older/alternative locations
+        from langchain_community.embeddings import HuggingFaceEmbeddings
+    except Exception:
+        # final fallback: raise a clear error later when embeddings are required
+        HuggingFaceEmbeddings = None
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from groq import Groq
@@ -38,7 +47,7 @@ embeddings = HuggingFaceEmbeddings(
 )
 
 st.set_page_config(page_title="📄 DocChatBot", layout="wide")
-st.title("📄 Strict Document Chatbot")
+st.title("📄 DocChatBot")
 
 # Initialize session state to track current document
 if "current_document" not in st.session_state:
@@ -332,4 +341,3 @@ Remember: Answer ONLY based on the context above. If the answer is not in the co
                         st.divider()
 
 #  .\venv\Scripts\streamlit run app.py
-
